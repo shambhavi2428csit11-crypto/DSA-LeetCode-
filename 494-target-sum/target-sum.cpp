@@ -8,7 +8,7 @@ int solve(int i,vector<int>& nums, int target,vector<vector<int>>&dp){
         else {
             return 0;
         }
-    }int index = target + 2000;
+    }int index = target + 2002;
     if(dp[i][index]!=-1){
         return dp[i][index];
     }
@@ -17,7 +17,7 @@ int solve(int i,vector<int>& nums, int target,vector<vector<int>>&dp){
     return dp[i][index]=plus+minus;
 }
     int findTargetSumWays(vector<int>& nums, int target) {
-        vector<vector<int>> dp(nums.size(), vector<int>(4001, -1));
+        vector<vector<int>> dp(nums.size(), vector<int>(4000, -1));
         return solve(0,nums,target,dp);
     }
 };
