@@ -27,34 +27,31 @@ public:
     int numDistinct(string s, string t) {
         long long n=s.size();
         long long m=t.size();
-        vector<vector<long long>> dp(n+1,vector<long long>(m+1,-1));
-        for(long long i=0;i<=m;i++){
-            dp[n][i]=0;
-        }
-        for(long long i=0;i<=n;i++){
-            dp[i][m]=1;
-        }
-
+        vector<long long>next(m+1,0);
+        next[m]=1;
          
         
         for(long long i=n-1;i>=0;i--)
         {
+            vector<long long>curr(m+1,0); 
+            curr[m]=1;  
             for(long long j=m-1;j>=0;j--)
             {
               if(s[i]==t[j])
               {
-                long long take=dp[i+1][j+1];
-                long long nottake=dp[i+1][j];
-                if(take+nottake>INT_MAX) dp[i][j]=INT_MAX;
-                else dp[i][j]=take+nottake;
+                long long take=next[j+1];
+                long long nottake=next[j];
+                if(take>LLONG_MAX-nottake) curr[j]=LLONG_MAX;
+                else curr[j]=take+nottake;
               }
               else 
               {
-                dp[i][j]=dp[i+1][j];
+                curr[j]=next[j];
               }  
             }
+            next=curr;
         }
-        return dp[0][0];
+        return next[0];
         
     }
 };
