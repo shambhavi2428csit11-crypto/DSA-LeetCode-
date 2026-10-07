@@ -3,38 +3,34 @@ public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
         int n=mat.size();
         int m=mat[0].size();
+
         queue<pair<int,int>> q;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(mat[i][j]==0){
                     q.push({i,j});
-
-                }
-                else{
+                }else{
                     mat[i][j]=-1;
                 }
             }
+
         }
         while(!q.empty()){
+            
+            int dr[]={-1,1,0,0};
+            int dc[]={0,0,-1,1};
             int r=q.front().first;
             int c=q.front().second;
             q.pop();
-            if(r-1>=0 && mat[r-1][c]==-1){
-                mat[r-1][c]=mat[r][c]+1;
-                q.push({r-1,c});
+            for(int k=0;k<4;k++){
+                int nr= r+dr[k];
+                int nc= c+dc[k];
+                if(nr>=0 && nr<n && nc>=0 && nc<m && mat[nr][nc]==-1){
+                    mat[nr][nc]=1+mat[r][c];
+                    q.push({nr,nc});
+                }
             }
-            if(r+1<n && mat[r+1][c]==-1){
-                mat[r+1][c]=mat[r][c]+1;
-                q.push({r+1,c});
-            }
-            if(c-1>=0 && mat[r][c-1]==-1){
-                mat[r][c-1]=mat[r][c]+1;
-                q.push({r,c-1});
-            }
-            if(c+1<m && mat[r][c+1]==-1){
-                mat[r][c+1]=mat[r][c]+1;
-                q.push({r,c+1});
-            }
+            
         }
         return mat;
     }
